@@ -4,7 +4,7 @@
 KEYS=("dockaka-060824-12ab34cd56ef78gh90ij12kl34mn56op78qr")
 
 # Tích hợp nội dung của run_dockaka.sh.sha256
-EXPECTED_CHECKSUM="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+EXPECTED_CHECKSUM="a61ffe3e55bb012a01fe8899d696cf2b1256d5bf88c1dda54fa37a9981d222f3"
 
 # Kiểm tra tính toàn vẹn của script
 echo "Kiểm tra tính toàn vẹn của script..."

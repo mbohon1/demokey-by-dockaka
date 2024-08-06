@@ -25,7 +25,13 @@ check_key_validity() {
     fi
 }
 
-# Kiểm tra từng key
-for key in $keys; do
-    check_key_validity $key
-done
+# Yêu cầu người dùng nhập key
+echo "Vui lòng nhập key:"
+read user_key
+
+# Kiểm tra key người dùng nhập có trong danh sách key hay không
+if echo "$keys" | grep -Fxq "$user_key"; then
+    check_key_validity $user_key
+else
+    echo "Key không hợp lệ! Vui lòng kiểm tra lại key hoặc liên hệ với quản trị viên."
+fi

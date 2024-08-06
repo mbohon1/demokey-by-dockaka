@@ -7,7 +7,7 @@ ENCRYPTED_URL="aHR0cDovLzY5LjI4Ljg4Ljc5L3Rlc3Qta2V5L2tleS50eHQ="
 KEY_URL=$(echo $ENCRYPTED_URL | base64 --decode)
 
 # Tải key từ URL
-keys=$(curl -s $KEY_URL)
+keys=$(curl -s $KEY_URL | tr '\n' ' ')
 
 # Lấy ngày hiện tại
 current_date=$(date +%Y%m%d)

@@ -40,5 +40,5 @@ if echo "$KEYS" | grep -Fxq "$key"; then
         echo "Key đã hết hạn sử dụng!"
     fi
 else
-    echo "Key không hợp lệ!"
+echo "Key không hợp lệ! Vui lòng kiểm tra lại key hoặc liên hệ với quản trị viên."
 fi

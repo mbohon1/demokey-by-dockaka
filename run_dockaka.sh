@@ -9,10 +9,7 @@ KEY_URL="$ENCRYPTED_URL"
 # Tải key từ URL
 KEYS=$(curl -s $KEY_URL)
 
-# In ra nội dung của KEYS để debug
-echo "URL chứa key: $KEY_URL"
-echo "Nội dung của KEYS:"
-echo "$KEYS"
+# Không in ra URL và nội dung của KEYS
 
 # Yêu cầu người dùng nhập key
 echo "Vui lòng nhập key:"

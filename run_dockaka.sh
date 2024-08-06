@@ -1,15 +1,16 @@
 #!/bin/bash
 
 # Mã hóa URL chứa key
-ENCRYPTED_URL="U2FsdGVkX1+1eH0lXLxzOouTuo6P3F3c/A7XqjbgKAQvmSqzts95EDqVr2Ph7dX9NbZ0ZVsRnAOtCwhV3JuLIX4FgMlKG8Mnl13EmhmXh6hkYzgQ+8UWxhx1iwSGRZS1XljJCVw1kFqa2YZSiXBLgceWttX4TP/41kv/ROst9+QwsoMlxID0DgYoI9dOhotCxSVUPIOSzYY8gbfON6szGg=="
+ENCRYPTED_URL="http://69.28.88.79/test-key/key.txt"
 
-# Giải mã URL chứa key
-KEY_URL=$(echo "$ENCRYPTED_URL" | openssl enc -aes-256-cbc -d -a -pass pass:my_secret_password)
+# Sử dụng URL trực tiếp
+KEY_URL="$ENCRYPTED_URL"
 
 # Tải key từ URL
 KEYS=$(curl -s $KEY_URL)
 
 # In ra nội dung của KEYS để debug
+echo "URL chứa key: $KEY_URL"
 echo "Nội dung của KEYS:"
 echo "$KEYS"
 

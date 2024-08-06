@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Kiểm tra tính toàn vẹn của script
+echo "Kiểm tra tính toàn vẹn của script..."
+sha256sum -c run_dockaka.sh.sha256 --status
+if [ $? -ne 0 ]; then
+    echo "Script đã bị chỉnh sửa. Dừng thực hiện."
+    exit 1
+fi
+
 # Yêu cầu người dùng nhập key
 echo "Vui lòng nhập key:"
 read key

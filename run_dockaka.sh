@@ -9,6 +9,10 @@ KEY_URL=$(echo $ENCRYPTED_URL | base64 --decode)
 # Tải key từ URL
 keys=$(curl -s $KEY_URL)
 
+# In ra danh sách key để debug
+echo "Danh sách key đã tải:"
+echo "$keys"
+
 # Lấy ngày hiện tại
 current_date=$(date +%Y%m%d)
 

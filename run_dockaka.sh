@@ -1,25 +1,17 @@
 #!/bin/bash
 
-# Tích hợp nội dung của key duy nhất
-KEYS=("dockaka-060824-12ab34cd56ef78gh90ij12kl34mn56op78qr")
+# URL chứa key
+KEY_URL="https://www.evernote.com/shard/s415/sh/8d680a38-4abe-0c18-db7f-8b968daa5536/VnamtwkbReSKgMmIBEE4dA5OqJ_ef1-MSKsseILnUbtO5s2vqls2NTyC0Q"
 
-# Tích hợp nội dung của run_dockaka.sh.sha256
-EXPECTED_CHECKSUM="a61ffe3e55bb012a01fe8899d696cf2b1256d5bf88c1dda54fa37a9981d222f3"
-
-# Kiểm tra tính toàn vẹn của script
-echo "Kiểm tra tính toàn vẹn của script..."
-ACTUAL_CHECKSUM=$(sha256sum run_dockaka.sh | awk '{print $1}')
-if [ "$ACTUAL_CHECKSUM" != "$EXPECTED_CHECKSUM" ]; then
-    echo "Script đã bị chỉnh sửa. Dừng thực hiện."
-    exit 1
-fi
+# Tải key từ URL
+KEYS=$(curl -s $KEY_URL)
 
 # Yêu cầu người dùng nhập key
 echo "Vui lòng nhập key:"
 read key
 
 # Kiểm tra key có trong danh sách key hay không
-if [[ " ${KEYS[@]} " =~ " ${key} " ]]; then
+if echo "$KEYS" | grep -Fxq "$key"; then
     # Kiểm tra thời gian sử dụng key
     start_date=$(date -d "2023-06-01" +%s)  # Ngày bắt đầu sử dụng key
     current_date=$(date +%s)

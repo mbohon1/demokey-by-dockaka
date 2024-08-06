@@ -9,9 +9,16 @@ KEY_URL=$(echo "$ENCRYPTED_URL" | openssl enc -aes-256-cbc -d -a -pass pass:my_s
 # Tải key từ URL
 KEYS=$(curl -s $KEY_URL)
 
+# In ra nội dung của KEYS để debug
+echo "Nội dung của KEYS:"
+echo "$KEYS"
+
 # Yêu cầu người dùng nhập key
 echo "Vui lòng nhập key:"
 read key
+
+# In ra key mà người dùng nhập vào để debug
+echo "Key người dùng nhập vào: $key"
 
 # Kiểm tra key có trong danh sách key hay không
 if echo "$KEYS" | grep -Fxq "$key"; then

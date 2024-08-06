@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# URL chứa key
-KEY_URL="https://www.evernote.com/shard/s415/sh/8d680a38-4abe-0c18-db7f-8b968daa5536/VnamtwkbReSKgMmIBEE4dA5OqJ_ef1-MSKsseILnUbtO5s2vqls2NTyC0Q"
+# Mã hóa URL chứa key
+ENCRYPTED_URL="U2FsdGVkX1+1eH0lXLxzOouTuo6P3F3c/A7XqjbgKAQvmSqzts95EDqVr2Ph7dX9NbZ0ZVsRnAOtCwhV3JuLIX4FgMlKG8Mnl13EmhmXh6hkYzgQ+8UWxhx1iwSGRZS1XljJCVw1kFqa2YZSiXBLgceWttX4TP/41kv/ROst9+QwsoMlxID0DgYoI9dOhotCxSVUPIOSzYY8gbfON6szGg=="
+
+# Giải mã URL chứa key
+KEY_URL=$(echo "$ENCRYPTED_URL" | openssl enc -aes-256-cbc -d -a -pass pass:my_secret_password)
 
 # Tải key từ URL
 KEYS=$(curl -s $KEY_URL)

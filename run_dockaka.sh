@@ -29,8 +29,8 @@ check_key_validity() {
 echo "Vui lòng nhập key:"
 read user_key
 
-# Kiểm tra key người dùng nhập có trong danh sách key hay không
-if echo "$keys" | grep -Fxq "$user_key"; then
+# Kiểm tra key người dùng nhập có bắt đầu bằng "dockaka-" và có trong danh sách key hay không
+if [[ "$user_key" == dockaka-* ]] && echo "$keys" | grep -Fxq "$user_key"; then
     check_key_validity $user_key
 else
     echo "Key không hợp lệ! Vui lòng kiểm tra lại key hoặc liên hệ với quản trị viên."

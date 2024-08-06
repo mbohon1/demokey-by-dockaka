@@ -1,42 +1,25 @@
 #!/bin/bash
 
-# Mã hóa URL chứa key
-ENCRYPTED_URL="http://69.28.88.79/test-key/key.txt"
+# Đọc nội dung của key.txt
+keys=$(cat key.txt)
 
-# Sử dụng URL trực tiếp
-KEY_URL="$ENCRYPTED_URL"
+# Lấy ngày hiện tại
+current_date=$(date +%Y%m%d)
 
-# Tải key từ URL
-KEYS=$(curl -s $KEY_URL)
-
-# Không in ra URL và nội dung của KEYS
-
-# Yêu cầu người dùng nhập key
-echo "Vui lòng nhập key:"
-read key
-
-# In ra key mà người dùng nhập vào để debug
-echo "Key người dùng nhập vào: $key"
-
-# Kiểm tra key có trong danh sách key hay không
-if echo "$KEYS" | grep -Fxq "$key"; then
-    # Kiểm tra thời gian sử dụng key
-    start_date=$(date -d "2023-06-01" +%s)  # Ngày bắt đầu sử dụng key
-    current_date=$(date +%s)
-    diff_days=$(( (current_date - start_date) / 86400 ))
-
-    if [ $diff_days -le 31 ]; then
-        # Giải mã file dockaka.sh
-        openssl enc -aes-256-cbc -d -in dockaka.sh.enc -out dockaka.sh -k "$key" -pbkdf2
-        
-        # Chạy file dockaka.sh
-        bash dockaka.sh
-        
-        # Xóa file dockaka.sh sau khi chạy
-        rm dockaka.sh
+# Hàm kiểm tra tính hợp lệ của key
+check_key_validity() {
+    key_date=$(echo $1 | cut -d'-' -f2)
+    key_date_formatted="20${key_date:4:2}${key_date:2:2}${key_date:0:2}"
+    expiry_date=$(date -d "$key_date_formatted +30 days" +%Y%m%d)
+    
+    if [ "$current_date" -le "$expiry_date" ]; then
+        echo "Key $1 is valid."
     else
-        echo "Key đã hết hạn sử dụng!"
+        echo "Key $1 has expired."
     fi
-else
-echo "Key không hợp lệ! Vui lòng kiểm tra lại key hoặc liên hệ với quản trị viên."
-fi
+}
+
+# Kiểm tra từng key
+for key in $keys; do
+    check_key_validity $key
+done

@@ -29,26 +29,8 @@ check_key_validity() {
     fi
 }
 
-# Yêu cầu người dùng nhập key
-echo "Vui lòng nhập key:"
-read user_key
-
-# In ra key người dùng nhập để debug
-echo "Key người dùng nhập: $user_key"
-
-# Kiểm tra key người dùng nhập có bắt đầu bằng "dockaka-" và có trong danh sách key hay không
-if [[ "$user_key" == dockaka-* ]]; then
-    echo "Key bắt đầu bằng 'dockaka-'"
-    if echo "$keys" | grep -Fxq "$user_key"; then
-        echo "Key có trong danh sách"
-        check_key_validity $user_key
-    else
-        echo "Key không có trong danh sách"
-    fi
-else
-    echo "Key không bắt đầu bằng 'dockaka-'"
-fi
-
-if ! echo "$keys" | grep -Fxq "$user_key"; then
-    echo "Key không hợp lệ! Vui lòng kiểm tra lại key hoặc liên hệ với quản trị viên."
-fi
+# Tạm thời tắt phần nhập key để kiểm tra danh sách key đã tải
+for key in $keys; do
+    echo "Kiểm tra key: $key"
+    check_key_validity $key
+done

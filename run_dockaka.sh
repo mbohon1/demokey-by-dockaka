@@ -24,13 +24,29 @@ check_key_validity() {
     
     if [ "$current_date" -le "$expiry_date" ]; then
         echo "Key $1 is valid."
+        return 0
     else
         echo "Key $1 has expired."
+        return 1
     fi
 }
 
-# Tạm thời tắt phần nhập key để kiểm tra danh sách key đã tải
-for key in $keys; do
-    echo "Kiểm tra key: $key"
-    check_key_validity $key
-done
+# Yêu cầu người dùng nhập key
+echo "Vui lòng nhập key:"
+read user_key
+
+# Kiểm tra key người dùng nhập có bắt đầu bằng "dockaka-" và có trong danh sách key hay không
+if [[ "$user_key" == dockaka-* ]] && echo "$keys" | grep -Fxq "$user_key"; then
+    if check_key_validity $user_key; then
+        # Giải mã file dockaka.sh.enc
+        openssl enc -aes-256-cbc -d -in dockaka.sh.enc -out dockaka.sh -k "$user_key" -pbkdf2
+        
+        # Chạy file dockaka.sh
+        bash dockaka.sh
+        
+        # Xóa file dockaka.sh sau khi chạy
+        rm dockaka.sh
+    fi
+else
+    echo "Key không hợp lệ! Vui lòng kiểm tra lại key hoặc liên hệ với quản trị viên."
+fi
